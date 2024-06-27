@@ -1,11 +1,11 @@
-package main
+package types
 
 import "net/http"
 
 type HandlerType func(w http.ResponseWriter, r *http.Request) error
 
 type ServerError struct {
-	error string
+	Error string
 }
 
 type CreateAccountRequest struct {

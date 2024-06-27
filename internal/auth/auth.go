@@ -1,14 +1,12 @@
-package main
+package auth
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/joho/godotenv"
 )
 
 type Claims struct {
@@ -32,8 +30,6 @@ func GenerateJWT(userID int) (string, error) {
 }
 
 func verifyToken(tokenString string) (jwt.Claims, error) {
-	godotenv.Load()
-	log.Println(JWTKey)
 	signingKey := []byte(JWTKey)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return signingKey, nil
@@ -60,7 +56,6 @@ func JWTAuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			w.Write([]byte("Error verifying JWT token: " + err.Error()))
 			return
 		}
-		log.Println("Done")
 		next.ServeHTTP(w, r)
 	})
 }

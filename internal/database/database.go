@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"database/sql"
@@ -10,10 +10,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type dbServices interface {
-	createAccount(username, hashedPassword string) error
-	getUser(w http.ResponseWriter, username string) *User
-	getAllUsers(w http.ResponseWriter) ([]*User, error)
+type DbServices interface {
+	CreateAccount(username, hashedPassword string) error
+	GetUser(w http.ResponseWriter, username string) *User
 }
 
 type DB struct {
